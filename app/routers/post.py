@@ -20,11 +20,6 @@ def create_post(
     return new_post
 
 
-@router.get("/", response_model=List[schemas.PostResponse])
-def get_posts(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    posts = db.query(models.Post).offset(skip).limit(limit).all()
-    return posts
-
 
 @router.get("/{post_id}", response_model=schemas.PostResponse)
 def get_post(post_id: int, db: Session = Depends(get_db)):

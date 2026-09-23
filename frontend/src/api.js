@@ -1,7 +1,10 @@
-// All requests go through the Vite dev proxy: /api/* -> http://localhost:8000/*
-// (backend is untouched; proxy strips the /api prefix, so no CORS needed).
+// Where do our API calls go?
+// - Dev (npm run dev): VITE_API_URL is empty, so we use '/api' and the Vite
+//   dev server proxies it to VITE_PROXY_TARGET (see vite.config.js + .env.development).
+// - Production build (npm run build): requests go straight to VITE_API_URL
+//   (set in .env.production). The backend now sends CORS headers, so this works.
 
-const BASE = '/api';
+export const BASE = import.meta.env.VITE_API_URL || '/api';
 
 export function getToken() {
   return localStorage.getItem('token');
